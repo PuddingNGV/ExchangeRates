@@ -1,11 +1,11 @@
-package com.app.exchangerates
+package com.app.exchangerates.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.app.exchangerates.R
 import com.app.exchangerates.databinding.ActivityMainScreenBinding
+import com.app.exchangerates.domain.models.Currency
 
 class MainScreenActivity : AppCompatActivity() {
 
@@ -29,6 +29,9 @@ class MainScreenActivity : AppCompatActivity() {
             binding.includeConverter.textNameFirstCurrency.text = textNameSecond
             binding.includeConverter.editTextValFirstCurrency.text = editTextValSecond
         }
+
+        //val dialog = CurrencyDialogFragment()
+        //dialog.show(supportFragmentManager, "settingsDialog")
 
         val data = mutableListOf(
             Currency("AUD", 1, "Австралийский доллар", 40.1688),
