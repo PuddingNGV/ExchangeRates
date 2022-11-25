@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".MainScreenActivity">
+
+    <TextView
+        android:id="@+id/textNameFirstCurrency"
+        style="@style/textCurrency"
+        android:layout_marginStart="40dp"
+        android:text="RUB"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextNameFirstCurrency"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editTextNameFirstCurrency" />
+
+    <EditText
+        android:id="@+id/editTextNameFirstCurrency"
+        style="@style/inputText"
+        android:layout_marginStart="30dp"
+        android:autofillHints=""
+        android:text="1"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textNameFirstCurrency"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/imageButtonChanger"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="120dp"
+        android:adjustViewBounds="true"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNameFirstCurrency"
+        app:srcCompat="@drawable/ic_repeat"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/textNameSecondCurrency"
+        style="@style/textCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:text="EUR"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextNameSecondCurrency"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editTextNameSecondCurrency" />
+
+    <EditText
+        android:id="@+id/editTextNameSecondCurrency"
+        style="@style/inputText"
+        android:layout_marginStart="30dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:inputType="number"
+        android:text="0"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textNameSecondCurrency"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonChanger"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
