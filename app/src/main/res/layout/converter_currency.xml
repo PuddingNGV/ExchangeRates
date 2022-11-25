@@ -11,12 +11,12 @@
         style="@style/textCurrency"
         android:layout_marginStart="40dp"
         android:text="RUB"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextNameFirstCurrency"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextValFirstCurrency"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextNameFirstCurrency" />
+        app:layout_constraintTop_toTopOf="@+id/editTextValFirstCurrency" />
 
     <EditText
-        android:id="@+id/editTextNameFirstCurrency"
+        android:id="@+id/editTextValFirstCurrency"
         style="@style/inputText"
         android:layout_marginStart="30dp"
         android:autofillHints=""
@@ -39,7 +39,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNameFirstCurrency"
+        app:layout_constraintTop_toBottomOf="@+id/editTextValFirstCurrency"
         app:srcCompat="@drawable/ic_repeat"
         tools:ignore="SpeakableTextPresentCheck" />
 
@@ -50,12 +50,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:text="EUR"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextNameSecondCurrency"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextValSecondCurrency"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextNameSecondCurrency" />
+        app:layout_constraintTop_toTopOf="@+id/editTextValSecondCurrency" />
 
     <EditText
-        android:id="@+id/editTextNameSecondCurrency"
+        android:id="@+id/editTextValSecondCurrency"
         style="@style/inputText"
         android:layout_marginStart="30dp"
         android:autofillHints=""
