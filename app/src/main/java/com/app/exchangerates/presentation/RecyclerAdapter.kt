@@ -1,11 +1,12 @@
-package com.app.exchangerates
+package com.app.exchangerates.presentation
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.app.exchangerates.R
+import com.app.exchangerates.domain.models.Currency
 
 class RecyclerAdapter(private val dataSet: List<Currency>) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
