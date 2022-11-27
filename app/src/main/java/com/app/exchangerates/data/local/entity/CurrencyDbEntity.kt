@@ -18,7 +18,7 @@ data class CurrencyDbEntity(
     val previous: Double,
     val value: Double
     ) {
-    fun toRocketInfo() : CurrencyModel = CurrencyModel(
+    fun toCurrencyModel() : CurrencyModel = CurrencyModel(
         charCode, nominal, name, value
     )
 }
