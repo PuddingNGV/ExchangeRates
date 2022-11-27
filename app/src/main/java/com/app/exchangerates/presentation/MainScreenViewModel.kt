@@ -12,5 +12,5 @@ import javax.inject.Inject
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(private val getDataCurrencyUseCase: GetDataCurrencyUseCase) : ViewModel() {
     val currencyLiveData = getDataCurrencyUseCase.executeLocal().asLiveData()
-    
+
 }
