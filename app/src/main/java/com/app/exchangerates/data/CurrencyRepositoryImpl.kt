@@ -1,31 +1,29 @@
 package com.app.exchangerates.data
 
-import android.util.Log
 import androidx.room.withTransaction
 import com.app.exchangerates.data.local.AppCurrencyDataBase
 import com.app.exchangerates.data.remote.CurrencyApi
-import com.app.exchangerates.data.remote.entinity.Valute
-import com.app.exchangerates.domain.models.CurrencyModel
+import com.app.exchangerates.data.remote.entinity.CurrencyData
 import com.app.exchangerates.domain.repository.RepositoryCurrency
-import com.app.exchangerates.until.Resource
 import com.app.exchangerates.until.networkBoundResource
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Singleton
 
 @Singleton
-class CurrencyRepositoryImpl(private val api: CurrencyApi, private val appCurrencyDataBase: AppCurrencyDataBase) : RepositoryCurrency {
+class CurrencyRepositoryImpl(
+    private val api: CurrencyApi,
+    private val appCurrencyDataBase: AppCurrencyDataBase
+) : RepositoryCurrency {
 
     private val dao = appCurrencyDataBase.getCurrencyDao()
-    private lateinit var response:Valute
+    private lateinit var response: List<CurrencyData>
 
-    override suspend fun getRemoteCurrency(): Valute {
+    override suspend fun getRemoteCurrency(): List<CurrencyData> {
         val answerApi = api.getCurrencyList()
         answerApi.let {
-            response = answerApi.valute
+            response = answerApi.valute.values.toList()
         }
-        Log.i("AAAA", "getRemote")
-        Log.i("AAAA", "${response.aMD}")
+        //Log.i("AAAA", "${response}")
         return response
     }
 
@@ -35,7 +33,7 @@ class CurrencyRepositoryImpl(private val api: CurrencyApi, private val appCurren
         },
         fetch = {
             delay(2000)
-            DataProcessing().toCurrencyDbEntity(mutableListOf(api.getCurrencyList().valute))
+            DataProcessing().toCurrencyDbEntity(getRemoteCurrency())
         },
         saveFetchResult = { currencyList ->
             appCurrencyDataBase.withTransaction {
