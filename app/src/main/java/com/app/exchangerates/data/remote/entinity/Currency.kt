@@ -3,7 +3,7 @@ package com.app.exchangerates.data.remote.entinity
 import com.app.exchangerates.data.local.entity.CurrencyDbEntity
 import com.google.gson.annotations.SerializedName
 
-data class Currency(
+data class CurrencyData(
     @SerializedName("CharCode")
     val charCode: String,
     @SerializedName("ID")

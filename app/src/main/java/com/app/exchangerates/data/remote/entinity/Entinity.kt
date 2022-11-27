@@ -13,5 +13,5 @@ data class Entinity(
     @SerializedName("Timestamp")
     val timestamp: String,
     @SerializedName("Valute")
-    val valute: Valute
+    val valute: HashMap<String, CurrencyData>
 )
