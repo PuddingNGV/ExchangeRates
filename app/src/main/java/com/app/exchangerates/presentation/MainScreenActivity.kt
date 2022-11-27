@@ -39,44 +39,13 @@ class MainScreenActivity : AppCompatActivity() {
 
         //val dialog = CurrencyDialogFragment()
         //dialog.show(supportFragmentManager, "settingsDialog")
-        /*
+
         vm.currencyLiveData.observe(this@MainScreenActivity) { currency ->
             if (!currency.data.isNullOrEmpty()) {
-                currencyModel = currency.data
-
-                binding.recyclerView.layoutManager = LinearLayoutManager(this)
+                currencyModel = currency.data.sortedBy { it.name }
                 binding.recyclerView.adapter = RecyclerAdapter(currencyModel)
             }
         }
-
-         */
-        val data = mutableListOf(
-            CurrencyModel("AUD", 1, "Австралийский доллар", 40.1688),
-            CurrencyModel("GBP", 1, "Фунт стерлингов Соединенного королевства", 71.8791),
-            CurrencyModel("USD", 1, "Доллар США",  60.5043),
-            CurrencyModel("EUR", 1, "Евро", 62.285),
-            CurrencyModel("INR", 1, "Индийских рупий", 74.3886),
-            CurrencyModel("CAD", 1, "Канадский доллар", 45.1659),
-            CurrencyModel("KGS", 100, "Киргизских сомов", 71.66),
-            CurrencyModel("CNY", 10, "Китайских юаней", 84.3616),
-            CurrencyModel("NOK", 10, "Норвежских крон", 60.2075),
-            CurrencyModel("UZS", 10000, "Узбекских сумов", 53.9788),
-            CurrencyModel("AUD", 1, "Австралийский доллар", 40.1688),
-            CurrencyModel("GBP", 1, "Фунт стерлингов Соединенного королевства", 71.8791),
-            CurrencyModel("USD", 1, "Доллар США",  60.5043),
-            CurrencyModel("EUR", 1, "Евро", 62.285),
-            CurrencyModel("INR", 1, "Индийских рупий", 74.3886),
-            CurrencyModel("CAD", 1, "Канадский доллар", 45.1659),
-            CurrencyModel("KGS", 100, "Киргизских сомов", 71.66),
-            CurrencyModel("CNY", 10, "Китайских юаней", 84.3616),
-            CurrencyModel("NOK", 10, "Норвежских крон", 60.2075),
-            CurrencyModel("UZS", 10000, "Узбекских сумов", 53.9788),
-            CurrencyModel("KRW", 1000, "Вон Республики Корея", 44.7583)
-        )
-
-        vm.test()
-        //binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        //binding.recyclerView.adapter = RecyclerAdapter(data)
-
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
 }
