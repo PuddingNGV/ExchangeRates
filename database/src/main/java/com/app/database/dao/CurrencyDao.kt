@@ -1,8 +1,8 @@
-package com.app.exchangerates.data.local
+package com.app.database.dao
 
 import androidx.room.*
 import androidx.room.OnConflictStrategy
-import com.app.exchangerates.data.local.entity.CurrencyDbEntity
+import com.app.database.entity.CurrencyDbEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

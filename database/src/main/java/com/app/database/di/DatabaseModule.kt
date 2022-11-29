@@ -1,8 +1,8 @@
-package com.app.exchangerates.di
+package com.app.database.di
 
 import android.app.Application
 import androidx.room.Room
-import com.app.exchangerates.data.local.AppCurrencyDataBase
+import com.app.database.AppCurrencyDataBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

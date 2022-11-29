@@ -1,7 +1,6 @@
-package com.app.exchangerates.data.local.entity
+package com.app.database.entity
 
 import androidx.room.*
-import com.app.exchangerates.domain.models.CurrencyModel
 
 @Entity (
     tableName = "currency",
@@ -17,9 +16,5 @@ data class CurrencyDbEntity(
     val numCode: String,
     val previous: Double,
     val value: Double
-    ) {
-    fun toCurrencyModel() : CurrencyModel = CurrencyModel(
-        charCode, nominal, name, value
     )
-}
 
