@@ -1,10 +1,12 @@
 package com.app.feature_currency_converter.data
 
 import android.content.Context
-import com.app.feature_currency_converter.domain.models.CurrencyModel
+import com.app.database.AppCurrencyDataBase
+import com.app.feature_currency_converter.domain.models.CurrencyModelModule
 import com.app.feature_currency_converter.domain.repository.RepositoryCurrencyConverter
+import com.app.feature_currency_converter.until.networkBoundResource
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.delay
 import javax.inject.Singleton
 
 
@@ -15,15 +17,27 @@ private const val KEY_NAME = "name_settings"
 private const val KEY_VALUE = "value_settings"
 
 @Singleton
-class RepositoryCurrencyConverterImpl(@ApplicationContext private val context: Context) : RepositoryCurrencyConverter {
+class RepositoryCurrencyConverterImpl(
+    @ApplicationContext private val context: Context,
+    private val appCurrencyDataBase: AppCurrencyDataBase
+) : RepositoryCurrencyConverter {
 
     private val sharedPreferences = context.getSharedPreferences(SHARED_PREFS_SETTINGS, Context.MODE_PRIVATE)
+    private val dao = appCurrencyDataBase.getCurrencyDao()
 
-    override fun getLocalCurrency(): Flow<List<CurrencyModel>> {
-        TODO("Not yet implemented")
-    }
+    override fun getLocalCurrency() = networkBoundResource(
+        query = {
+            DataProcessing().toCurrencyModel(dao.getAll())
+        },
+        fetch = {
+            delay(2000)
+        },
+        saveFetchResult = {
+        }
+    )
 
-    fun putSharedPreferencesData(currencyModel: CurrencyModel) {
+
+    fun putSharedPreferencesData(currencyModel: CurrencyModelModule) {
         sharedPreferences.edit().putString(KEY_CHAR_CODE, currencyModel.charCode).apply()
         sharedPreferences.edit().putInt(KEY_NOMINAL, currencyModel.nominal).apply()
         sharedPreferences.edit().putString(KEY_NAME, currencyModel.name).apply()
