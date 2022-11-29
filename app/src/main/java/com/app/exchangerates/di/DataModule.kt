@@ -15,7 +15,7 @@ import javax.inject.Singleton
 object DataModule {
     @Provides
     @Singleton
-    fun provideRocketRepo(api: CurrencyApi, appCurrencyDataBase: AppCurrencyDataBase): RepositoryCurrency {
+    fun provideCurrencyRepository(api: CurrencyApi, appCurrencyDataBase: AppCurrencyDataBase): RepositoryCurrency {
         return CurrencyRepositoryImpl(api, appCurrencyDataBase)
     }
 }
