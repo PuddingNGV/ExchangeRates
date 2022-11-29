@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "ExchangeRates"
 include ':app'
 include ':feature-currency-converter'
+include ':database'
