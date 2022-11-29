@@ -1,15 +1,15 @@
 package com.app.exchangerates.presentation
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.exchangerates.R
 import com.app.exchangerates.databinding.ActivityMainScreenBinding
 import com.app.exchangerates.domain.models.CurrencyModel
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
+import com.app.feature_currency_converter.presentation.CurrencyDialogFragment
 
 @AndroidEntryPoint
 class MainScreenActivity : AppCompatActivity() {
@@ -37,15 +37,22 @@ class MainScreenActivity : AppCompatActivity() {
             binding.includeConverter.editTextValFirstCurrency.text = editTextValSecond
         }
 
-        //val dialog = CurrencyDialogFragment()
-        //dialog.show(supportFragmentManager, "settingsDialog")
+        binding.includeConverter.textNameFirstCurrency.setOnClickListener {
+            val dialog = CurrencyDialogFragment()
+            dialog.show(supportFragmentManager, "settingsDialog")
+        }
+
 
         vm.currencyLiveData.observe(this@MainScreenActivity) { currency ->
             if (!currency.data.isNullOrEmpty()) {
                 currencyModel = currency.data.sortedBy { it.name }
                 binding.recyclerView.adapter = RecyclerAdapter(currencyModel)
+                binding.includeConverter.textNameFirstCurrency.text = "RUB"
+                binding.includeConverter.editTextValFirstCurrency.setText("1")
+                binding.includeConverter.textNameSecondCurrency.text = "USD"
+                binding.includeConverter.editTextValSecondCurrency.setText("1")
             }
         }
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
     }
 }
