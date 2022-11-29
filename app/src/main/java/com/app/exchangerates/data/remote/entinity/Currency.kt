@@ -1,6 +1,6 @@
 package com.app.exchangerates.data.remote.entinity
 
-import com.app.exchangerates.data.local.entity.CurrencyDbEntity
+import com.app.database.entity.CurrencyDbEntity
 import com.google.gson.annotations.SerializedName
 
 data class CurrencyData(

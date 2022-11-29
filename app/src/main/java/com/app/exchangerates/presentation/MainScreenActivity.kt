@@ -1,13 +1,12 @@
 package com.app.exchangerates.presentation
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.exchangerates.R
 import com.app.exchangerates.databinding.ActivityMainScreenBinding
-import com.app.exchangerates.domain.models.CurrencyModel
+import com.app.exchangerates.domain.models.CurrencyModelApp
 import dagger.hilt.android.AndroidEntryPoint
 import com.app.feature_currency_converter.presentation.CurrencyDialogFragment
 
@@ -16,7 +15,7 @@ class MainScreenActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainScreenBinding
     private val vm: MainScreenViewModel by viewModels()
-    private lateinit var currencyModel: List<CurrencyModel>
+    private lateinit var currencyModel: List<CurrencyModelApp>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

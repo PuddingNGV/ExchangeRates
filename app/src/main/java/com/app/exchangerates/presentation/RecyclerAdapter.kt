@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.app.exchangerates.R
-import com.app.exchangerates.domain.models.CurrencyModel
+import com.app.exchangerates.domain.models.CurrencyModelApp
 
-class RecyclerAdapter(private val dataSet: List<CurrencyModel>) :
+class RecyclerAdapter(private val dataSet: List<CurrencyModelApp>) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
