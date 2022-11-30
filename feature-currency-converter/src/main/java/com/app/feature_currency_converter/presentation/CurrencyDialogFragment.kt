@@ -32,7 +32,7 @@ class CurrencyDialogFragment : DialogFragment(), RecyclerAdapter.OnItemClickList
 
     override fun onStart() {
         super.onStart()
-        vm.currencyConverterTest.observe(this@CurrencyDialogFragment) { listData ->
+        vm.currencyConverterLiveData.observe(this@CurrencyDialogFragment) { listData ->
             listData.data.let {
                 if (it != null) {
                     data = it
@@ -56,7 +56,7 @@ class CurrencyDialogFragment : DialogFragment(), RecyclerAdapter.OnItemClickList
     }
 
     override fun onItemClick(position: Int) {
-        val clickItem = data[position]
+        vm.selectedItem(data[position])
         dismiss()
     }
 
