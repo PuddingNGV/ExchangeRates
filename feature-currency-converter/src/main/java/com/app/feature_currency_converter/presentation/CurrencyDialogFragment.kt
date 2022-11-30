@@ -57,6 +57,7 @@ class CurrencyDialogFragment : DialogFragment(), RecyclerAdapter.OnItemClickList
 
     override fun onItemClick(position: Int) {
         val clickItem = data[position]
+        dismiss()
     }
 
 }
