@@ -1,5 +1,7 @@
 package com.app.exchangerates.presentation
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -10,6 +12,12 @@ import com.app.exchangerates.domain.models.CurrencyModelApp
 import dagger.hilt.android.AndroidEntryPoint
 import com.app.feature_currency_converter.presentation.CurrencyDialogFragment
 
+private const val SHARED_PREFS_CURRENCY = "shared_prefs_settings"
+private const val KEY_CHAR_CODE = "char_code_settings"
+private const val KEY_NOMINAL = "nominal_settings"
+private const val KEY_NAME = "name_settings"
+private const val KEY_VALUE = "value_settings"
+
 @AndroidEntryPoint
 class MainScreenActivity : AppCompatActivity() {
 
@@ -17,9 +25,14 @@ class MainScreenActivity : AppCompatActivity() {
     private val vm: MainScreenViewModel by viewModels()
     private lateinit var currencyModel: List<CurrencyModelApp>
 
+    private lateinit var preferencesCurrency: SharedPreferences
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
+
+        preferencesCurrency = getSharedPreferences(SHARED_PREFS_CURRENCY, Context.MODE_PRIVATE)
 
         //Binding added
         binding = ActivityMainScreenBinding.inflate(layoutInflater)
@@ -39,6 +52,23 @@ class MainScreenActivity : AppCompatActivity() {
         binding.includeConverter.textNameFirstCurrency.setOnClickListener {
             val dialog = CurrencyDialogFragment()
             dialog.show(supportFragmentManager, "settingsDialog")
+            val preferencesListenerSettings = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+                if (key == KEY_CHAR_CODE) {
+                    binding.includeConverter.textNameFirstCurrency.text = preferencesCurrency.getString(key, "not found")
+                }
+            }
+            preferencesCurrency.registerOnSharedPreferenceChangeListener(preferencesListenerSettings)
+        }
+
+        binding.includeConverter.textNameSecondCurrency.setOnClickListener {
+            val dialog = CurrencyDialogFragment()
+            dialog.show(supportFragmentManager, "settingsDialog")
+            val preferencesListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+                if (key == KEY_CHAR_CODE) {
+                    binding.includeConverter.textNameSecondCurrency.text = preferencesCurrency.getString(key, "not found")
+                }
+            }
+            preferencesCurrency.registerOnSharedPreferenceChangeListener(preferencesListener)
         }
 
 
@@ -46,9 +76,7 @@ class MainScreenActivity : AppCompatActivity() {
             if (!currency.data.isNullOrEmpty()) {
                 currencyModel = currency.data.sortedBy { it.name }
                 binding.recyclerView.adapter = RecyclerAdapter(currencyModel)
-                binding.includeConverter.textNameFirstCurrency.text = "RUB"
                 binding.includeConverter.editTextValFirstCurrency.setText("1")
-                binding.includeConverter.textNameSecondCurrency.text = "USD"
                 binding.includeConverter.editTextValSecondCurrency.setText("1")
             }
         }
