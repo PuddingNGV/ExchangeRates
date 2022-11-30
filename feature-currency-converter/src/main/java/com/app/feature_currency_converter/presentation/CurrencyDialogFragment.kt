@@ -14,7 +14,7 @@ import com.app.feature_currency_converter.domain.models.CurrencyModelModule
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CurrencyDialogFragment : DialogFragment() {
+class CurrencyDialogFragment : DialogFragment(), RecyclerAdapter.OnItemClickListener {
     private var _binding:FragmentCurrencyBinding? = null
     private val binding get() = _binding!!
     private val vm: CurrencyConverterViewModel by viewModels()
@@ -36,7 +36,7 @@ class CurrencyDialogFragment : DialogFragment() {
             listData.data.let {
                 if (it != null) {
                     data = it
-                    binding.recycler.adapter = RecyclerAdapter(data)
+                    binding.recycler.adapter = RecyclerAdapter(data, this)
                 }
             }
         }
@@ -54,4 +54,9 @@ class CurrencyDialogFragment : DialogFragment() {
         super.onDestroy()
         _binding = null
     }
+
+    override fun onItemClick(position: Int) {
+        val clickItem = data[position]
+    }
+
 }
