@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface RepositoryCurrencyConverter {
     fun getLocalCurrency(): Flow<Resource<List<CurrencyModelModule>>>
+    fun saveSelectionItem(currencyModelModule: CurrencyModelModule)
 }
