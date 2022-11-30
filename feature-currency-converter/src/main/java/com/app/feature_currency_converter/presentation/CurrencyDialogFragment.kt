@@ -33,9 +33,11 @@ class CurrencyDialogFragment : DialogFragment(), RecyclerAdapter.OnItemClickList
     override fun onStart() {
         super.onStart()
         vm.currencyConverterLiveData.observe(this@CurrencyDialogFragment) { listData ->
-            listData.data.let {
-                if (it != null) {
-                    data = it
+            listData.data.let { value ->
+                if (value != null) {
+                    val dataMutableData = value.toMutableList()
+                    dataMutableData.add(dataMutableData.lastIndex, CurrencyModelModule("RUB", 1, "Российский рубль", 1.0))
+                    data = dataMutableData.toList().sortedBy{ name -> name.name }
                     binding.recycler.adapter = RecyclerAdapter(data, this)
                 }
             }
