@@ -36,11 +36,10 @@ class RepositoryCurrencyConverterImpl(
         }
     )
 
-
-    fun putSharedPreferencesData(currencyModel: CurrencyModelModule) {
-        sharedPreferences.edit().putString(KEY_CHAR_CODE, currencyModel.charCode).apply()
-        sharedPreferences.edit().putInt(KEY_NOMINAL, currencyModel.nominal).apply()
-        sharedPreferences.edit().putString(KEY_NAME, currencyModel.name).apply()
-        sharedPreferences.edit().putLong(KEY_VALUE, currencyModel.value.toRawBits()).apply()
+    override fun saveSelectionItem(currencyModelModule: CurrencyModelModule) {
+        sharedPreferences.edit().putString(KEY_CHAR_CODE, currencyModelModule.charCode).apply()
+        sharedPreferences.edit().putInt(KEY_NOMINAL, currencyModelModule.nominal).apply()
+        sharedPreferences.edit().putString(KEY_NAME, currencyModelModule.name).apply()
+        sharedPreferences.edit().putLong(KEY_VALUE, currencyModelModule.value.toRawBits()).apply()
     }
 }
