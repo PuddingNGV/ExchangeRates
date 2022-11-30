@@ -8,17 +8,33 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.feature_currency_converter.R
 import com.app.feature_currency_converter.domain.models.CurrencyModelModule
 
-class RecyclerAdapter(private val dataSet: List<CurrencyModelModule>) :
+class RecyclerAdapter(
+    private val dataSet: List<CurrencyModelModule>,
+    private val listener: OnItemClickListener
+    ) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+   inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view),
+        View.OnClickListener{
         val textViewCharCode: TextView
         val textName: TextView
 
         init {
+            itemView.setOnClickListener(this)
             textViewCharCode = view.findViewById(R.id.textCharCode)
             textName = view.findViewById(R.id.textName)
         }
+
+        override fun onClick(p0: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(position)
+            }
+        }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
