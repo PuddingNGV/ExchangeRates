@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.exchangerates.R
 import com.app.exchangerates.databinding.ActivityMainScreenBinding
@@ -13,7 +12,7 @@ import com.app.exchangerates.domain.models.CurrencyModelApp
 import dagger.hilt.android.AndroidEntryPoint
 import com.app.feature_currency_converter.presentation.CurrencyDialogFragment
 
-private const val SHARED_PREFS_CURRENCY = "shared_prefs_settings"
+private const val SHARED_PREFS = "shared_prefs_settings"
 private const val KEY_CHAR_CODE = "char_code_settings"
 private const val KEY_NOMINAL = "nominal_settings"
 private const val KEY_NAME = "name_settings"
@@ -27,13 +26,15 @@ class MainScreenActivity : AppCompatActivity() {
     private lateinit var currencyModel: List<CurrencyModelApp>
 
     private lateinit var preferencesCurrency: SharedPreferences
+    private lateinit var preferencesListenerFirst: SharedPreferences.OnSharedPreferenceChangeListener
+    private lateinit var preferencesListenerSecond: SharedPreferences.OnSharedPreferenceChangeListener
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
 
-        preferencesCurrency = getSharedPreferences(SHARED_PREFS_CURRENCY, Context.MODE_PRIVATE)
+        preferencesCurrency = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
 
         //Binding added
         binding = ActivityMainScreenBinding.inflate(layoutInflater)
@@ -53,23 +54,36 @@ class MainScreenActivity : AppCompatActivity() {
         binding.includeConverter.textNameFirstCurrency.setOnClickListener {
             val dialog = CurrencyDialogFragment()
             dialog.show(supportFragmentManager, "CurrencyDialog")
-            val preferencesListenerSettings = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+
+            if(this::preferencesListenerSecond.isInitialized) {
+                preferencesCurrency.unregisterOnSharedPreferenceChangeListener(preferencesListenerSecond)
+            }
+
+            preferencesListenerFirst = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
                 if (key == KEY_CHAR_CODE) {
                     binding.includeConverter.textNameFirstCurrency.text = preferencesCurrency.getString(key, "not found")
+                    println(preferencesCurrency.getString(key, "not found"))
                 }
             }
-            preferencesCurrency.registerOnSharedPreferenceChangeListener(preferencesListenerSettings)
+            preferencesCurrency.registerOnSharedPreferenceChangeListener(preferencesListenerFirst)
+
         }
 
         binding.includeConverter.textNameSecondCurrency.setOnClickListener {
             val dialog = CurrencyDialogFragment()
             dialog.show(supportFragmentManager, "CurrencyDialog")
-            val preferencesListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+
+            if(this::preferencesListenerFirst.isInitialized) {
+                preferencesCurrency.unregisterOnSharedPreferenceChangeListener(preferencesListenerFirst)
+            }
+
+            preferencesListenerSecond = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
                 if (key == KEY_CHAR_CODE) {
                     binding.includeConverter.textNameSecondCurrency.text = preferencesCurrency.getString(key, "not found")
+                    println(preferencesCurrency.getString(key, "not found"))
                 }
             }
-            preferencesCurrency.registerOnSharedPreferenceChangeListener(preferencesListener)
+            preferencesCurrency.registerOnSharedPreferenceChangeListener(preferencesListenerSecond)
         }
 
 
@@ -92,7 +106,11 @@ class MainScreenActivity : AppCompatActivity() {
             binding.includeConverter.editTextValSecondCurrency.setText(result.toString())
         }
 
+    }
 
-
+    override fun onPause() {
+        super.onPause()
+        preferencesCurrency.unregisterOnSharedPreferenceChangeListener(preferencesListenerFirst)
+        preferencesCurrency.unregisterOnSharedPreferenceChangeListener(preferencesListenerSecond)
     }
 }

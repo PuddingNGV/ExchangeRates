@@ -30,7 +30,7 @@ class RepositoryCurrencyConverterImpl(
             DataProcessing().toCurrencyModel(dao.getAll())
         },
         fetch = {
-            delay(2000)
+            delay(10)
         },
         saveFetchResult = {
         }
