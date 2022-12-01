@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.exchangerates.R
 import com.app.exchangerates.databinding.ActivityMainScreenBinding
@@ -51,7 +52,7 @@ class MainScreenActivity : AppCompatActivity() {
 
         binding.includeConverter.textNameFirstCurrency.setOnClickListener {
             val dialog = CurrencyDialogFragment()
-            dialog.show(supportFragmentManager, "settingsDialog")
+            dialog.show(supportFragmentManager, "CurrencyDialog")
             val preferencesListenerSettings = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
                 if (key == KEY_CHAR_CODE) {
                     binding.includeConverter.textNameFirstCurrency.text = preferencesCurrency.getString(key, "not found")
@@ -62,7 +63,7 @@ class MainScreenActivity : AppCompatActivity() {
 
         binding.includeConverter.textNameSecondCurrency.setOnClickListener {
             val dialog = CurrencyDialogFragment()
-            dialog.show(supportFragmentManager, "settingsDialog")
+            dialog.show(supportFragmentManager, "CurrencyDialog")
             val preferencesListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
                 if (key == KEY_CHAR_CODE) {
                     binding.includeConverter.textNameSecondCurrency.text = preferencesCurrency.getString(key, "not found")
@@ -78,8 +79,20 @@ class MainScreenActivity : AppCompatActivity() {
                 binding.recyclerView.adapter = RecyclerAdapter(currencyModel)
                 binding.includeConverter.editTextValFirstCurrency.setText("1")
                 binding.includeConverter.editTextValSecondCurrency.setText("1")
+                binding.includeConverter.textNameSecondCurrency.text = currencyModel[11].charCode
             }
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
+
+        binding.includeConverter.buttonConverter.setOnClickListener {
+            val charCodeFirst = binding.includeConverter.textNameFirstCurrency.text.toString()
+            val sumValue = binding.includeConverter.editTextValFirstCurrency.text.toString().toDouble()
+            val charCodeSecond = binding.includeConverter.textNameSecondCurrency.text.toString()
+            val result = vm.convertCurrency(currencyModel, charCodeFirst, sumValue, charCodeSecond )
+            binding.includeConverter.editTextValSecondCurrency.setText(result.toString())
+        }
+
+
+
     }
 }
