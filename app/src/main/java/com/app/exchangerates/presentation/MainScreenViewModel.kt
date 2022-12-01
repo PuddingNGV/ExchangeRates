@@ -14,28 +14,30 @@ class MainScreenViewModel @Inject constructor(private val getDataCurrencyUseCase
 
     fun convertCurrency(
         currencyModel: List<CurrencyModelApp>,
-        charCodeFirst: String,
-        valueFirst: Double = 0.0,
-        charCodeSecond: String
+        charCodeFrom: String,
+        input: Double = 0.0,
+        charCodeTo: String
     ): Double {
-        val firstC = findSelectedItem(currencyModel, charCodeFirst)
-        val secondC = findSelectedItem(currencyModel, charCodeSecond)
+
+        val currencyFrom = findSelectedItem(currencyModel, charCodeFrom)
+        val currencyTo = findSelectedItem(currencyModel, charCodeTo)
+
         val resultBigDecimal = when {
-            firstC.value == 0.0 -> {
+            currencyFrom.value == 0.0 -> {
                 println("ПЕРВАЯ ВАЛЮТА ЭТО РУБЛИ")
-                (valueFirst / secondC.value).toBigDecimal()
+                (input / currencyTo.value * currencyTo.nominal.toDouble()).toBigDecimal()
             }
-            secondC.value == 0.0 -> {
+            currencyTo.value == 0.0 -> {
                 println("ВТОРАЯ ВАЛЮТА ЭТО РУБЛИ")
-                (valueFirst * firstC.value).toBigDecimal()
+                (input * currencyFrom.value / currencyFrom.nominal.toDouble()).toBigDecimal()
             }
             else -> {
                 //Считает не правильно
                 println("ДВОЙНАЯ КОНВЕРТАЦИЯ")
-                (valueFirst * (firstC.value) / secondC.value).toBigDecimal()
+                ((((currencyFrom.value / currencyFrom.nominal) * input) / currencyTo.value) *  currencyTo.nominal).toBigDecimal()
             }
         }
-        return resultBigDecimal.setScale(4, RoundingMode.HALF_EVEN).toDouble()
+        return resultBigDecimal.setScale(2, RoundingMode.HALF_DOWN).toDouble()
     }
 
     private fun findSelectedItem(currencyModel: List<CurrencyModelApp>, charCode: String): CurrencyModelApp {
