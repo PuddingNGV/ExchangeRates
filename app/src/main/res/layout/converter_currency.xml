@@ -62,11 +62,22 @@
         android:ems="10"
         android:inputType="number"
         android:text="0"
+        android:enabled="false"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textNameSecondCurrency"
         app:layout_constraintTop_toBottomOf="@+id/imageButtonChanger"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/buttonConverter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Конвертировать"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextValSecondCurrency" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

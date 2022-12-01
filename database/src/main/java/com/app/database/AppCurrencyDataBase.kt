@@ -1,8 +1,10 @@
-package com.app.exchangerates.data.local
+package com.app.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.app.exchangerates.data.local.entity.CurrencyDbEntity
+import com.app.database.dao.CurrencyDao
+import com.app.database.entity.CurrencyDbEntity
+
 
 @Database(entities = [CurrencyDbEntity::class], version = 1)
 //@TypeConverters(Converter::class)

@@ -1,4 +1,4 @@
-package com.app.exchangerates.until
+package com.app.feature_currency_converter.until
 
 sealed class Resource<T>(
     val data: T? = null,

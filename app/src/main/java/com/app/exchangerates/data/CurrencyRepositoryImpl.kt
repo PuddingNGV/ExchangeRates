@@ -1,7 +1,7 @@
 package com.app.exchangerates.data
 
 import androidx.room.withTransaction
-import com.app.exchangerates.data.local.AppCurrencyDataBase
+import com.app.database.AppCurrencyDataBase
 import com.app.exchangerates.data.remote.CurrencyApi
 import com.app.exchangerates.data.remote.entinity.CurrencyData
 import com.app.exchangerates.domain.repository.RepositoryCurrency
