@@ -18,22 +18,20 @@ class MainScreenViewModel @Inject constructor(private val getDataCurrencyUseCase
         input: Double = 0.0,
         charCodeTo: String
     ): Double {
-
         val currencyFrom = findSelectedItem(currencyModel, charCodeFrom)
         val currencyTo = findSelectedItem(currencyModel, charCodeTo)
 
         val resultBigDecimal = when {
             currencyFrom.value == 0.0 -> {
-                println("ПЕРВАЯ ВАЛЮТА ЭТО РУБЛИ")
+                //conversion from rubles
                 (input / currencyTo.value * currencyTo.nominal.toDouble()).toBigDecimal()
             }
             currencyTo.value == 0.0 -> {
-                println("ВТОРАЯ ВАЛЮТА ЭТО РУБЛИ")
+                //Convert to rubles
                 (input * currencyFrom.value / currencyFrom.nominal.toDouble()).toBigDecimal()
             }
             else -> {
-                //Считает не правильно
-                println("ДВОЙНАЯ КОНВЕРТАЦИЯ")
+                //double currency conversion
                 ((((currencyFrom.value / currencyFrom.nominal) * input) / currencyTo.value) *  currencyTo.nominal).toBigDecimal()
             }
         }
