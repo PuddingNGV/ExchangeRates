@@ -66,7 +66,6 @@ class CurrencyDialogFragment : DialogFragment(), RecyclerAdapter.OnItemClickList
 
     override fun onItemClick(position: Int) {
         vm.selectedItem(data[position])
-        //println(data[position])
         dismiss()
     }
 
