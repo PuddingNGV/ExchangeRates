@@ -8,17 +8,9 @@ import android.os.IBinder
 import android.util.Log
 import android.os.PowerManager
 import android.os.SystemClock
-import androidx.activity.viewModels
-import androidx.lifecycle.asLiveData
-import com.app.exchangerates.data.CurrencyRepositoryImpl
 import com.app.exchangerates.domain.models.CurrencyModelApp
 import com.app.exchangerates.domain.repository.RepositoryCurrency
 import com.app.exchangerates.presentation.MainScreenActivity
-import com.app.exchangerates.presentation.MainScreenViewModel
-import com.app.exchangerates.presentation.RecyclerAdapter
-import com.app.exchangerates.until.ResourceApp
-import com.app.feature_currency_converter.data.RepositoryCurrencyConverterImpl
-import com.app.feature_currency_converter.domain.usecase.GetLocalDataUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.toList

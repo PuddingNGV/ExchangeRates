@@ -1,5 +1,6 @@
 package com.app.exchangerates.data
 
+import android.util.Log
 import androidx.room.withTransaction
 import com.app.database.AppCurrencyDataBase
 import com.app.exchangerates.data.remote.CurrencyApi
@@ -36,6 +37,7 @@ class CurrencyRepositoryImpl(
             DataProcessing().toCurrencyDbEntity(getRemoteCurrency())
         },
         saveFetchResult = { currencyList ->
+            Log.i("Services", currencyList[0].toString())
             appCurrencyDataBase.withTransaction {
                 dao.deleteAll()
                 dao.insert(currencyList)
