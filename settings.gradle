@@ -16,4 +16,3 @@ rootProject.name = "ExchangeRates"
 include ':app'
 include ':feature-currency-switch'
 include ':database'
-include ':feature-services'
