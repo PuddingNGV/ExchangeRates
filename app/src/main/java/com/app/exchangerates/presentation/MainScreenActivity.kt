@@ -1,14 +1,21 @@
 package com.app.exchangerates.presentation
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.exchangerates.R
 import com.app.exchangerates.databinding.ActivityMainScreenBinding
 import com.app.exchangerates.domain.models.CurrencyModelApp
+import com.app.exchangerates.presentation.services.Actions
+import com.app.exchangerates.presentation.services.ServiceState
+import com.app.exchangerates.presentation.services.ServicesUpdateData
+import com.app.exchangerates.presentation.services.getServiceState
 import dagger.hilt.android.AndroidEntryPoint
 import com.app.feature_currency_converter.presentation.CurrencyDialogFragment
 
@@ -20,7 +27,6 @@ private const val KEY_VALUE = "value_settings"
 
 @AndroidEntryPoint
 class MainScreenActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainScreenBinding
     private val vm: MainScreenViewModel by viewModels()
     private lateinit var currencyModel: List<CurrencyModelApp>
@@ -29,10 +35,10 @@ class MainScreenActivity : AppCompatActivity() {
     private lateinit var preferencesListenerFirst: SharedPreferences.OnSharedPreferenceChangeListener
     private lateinit var preferencesListenerSecond: SharedPreferences.OnSharedPreferenceChangeListener
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
+        actionOnService(Actions.START)
 
         preferencesCurrency = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
 
@@ -86,7 +92,6 @@ class MainScreenActivity : AppCompatActivity() {
             preferencesCurrency.registerOnSharedPreferenceChangeListener(preferencesListenerSecond)
         }
 
-
         vm.currencyLiveData.observe(this@MainScreenActivity) { currency ->
             if (!currency.data.isNullOrEmpty()) {
                 currencyModel = currency.data.sortedBy { it.name }
@@ -109,8 +114,20 @@ class MainScreenActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
+        if (this::preferencesListenerFirst.isInitialized){
+            preferencesCurrency.unregisterOnSharedPreferenceChangeListener(preferencesListenerFirst)
+        }
+        if (this::preferencesListenerSecond.isInitialized){
+            preferencesCurrency.unregisterOnSharedPreferenceChangeListener(preferencesListenerSecond)
+        }
         super.onPause()
-        preferencesCurrency.unregisterOnSharedPreferenceChangeListener(preferencesListenerFirst)
-        preferencesCurrency.unregisterOnSharedPreferenceChangeListener(preferencesListenerSecond)
+    }
+
+    private fun actionOnService(action: Actions) {
+        if (getServiceState(this) == ServiceState.STOPPED && action == Actions.STOP) return
+        Intent(this, ServicesUpdateData::class.java).also {
+            it.action = action.name
+            startForegroundService(it)
+        }
     }
 }
