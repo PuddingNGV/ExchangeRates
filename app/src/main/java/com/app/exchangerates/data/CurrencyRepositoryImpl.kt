@@ -37,7 +37,7 @@ class CurrencyRepositoryImpl(
             DataProcessing().toCurrencyDbEntity(getRemoteCurrency())
         },
         saveFetchResult = { currencyList ->
-            Log.i("Services", currencyList[0].toString())
+            //Log.i("Services", currencyList[0].toString())
             appCurrencyDataBase.withTransaction {
                 dao.deleteAll()
                 dao.insert(currencyList)
