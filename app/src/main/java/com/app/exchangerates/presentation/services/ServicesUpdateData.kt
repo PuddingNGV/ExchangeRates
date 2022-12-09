@@ -17,6 +17,7 @@ import com.app.exchangerates.domain.repository.RepositoryCurrency
 import com.app.exchangerates.presentation.MainScreenActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.toList
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -108,6 +109,7 @@ class ServicesUpdateData : LifecycleService() {
                             Log.i("Services", "is work")
                         }
                     }
+                    myRepository.getLocalCurrency().toList()
                 }
                 delay(20000)
             }
